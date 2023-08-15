@@ -19,19 +19,19 @@ class LocationSchema(Schema):
     elevation = fields.Float()
     feature_code = fields.Str()
     country_code = fields.Str()
-    admin1_id = fields.Int(missing=None)  # Making the admin fields optional
-    admin2_id = fields.Int(missing=None)
-    admin3_id = fields.Int(missing=None)
-    admin4_id = fields.Int(missing=None)
+    admin1_id = fields.Int(load_default=None)  # Making the admin fields optional
+    admin2_id = fields.Int(load_default=None)
+    admin3_id = fields.Int(load_default=None)
+    admin4_id = fields.Int(load_default=None)
     timezone = fields.Str()
     population = fields.Int()
     postcodes = fields.List(fields.Str())  # postcodes is a list of strings. Example: 'postcodes': ['10967', '13347']
     country_id = fields.Int()
     country = fields.Str()
-    admin1 = fields.Str(missing=None)
-    admin2 = fields.Str(missing=None)
-    admin3 = fields.Str(missing=None)
-    admin4 = fields.Str(missing=None)
+    admin1 = fields.Str(load_default=None)
+    admin2 = fields.Str(load_default=None)
+    admin3 = fields.Str(load_default=None)
+    admin4 = fields.Str(load_default=None)
 
 
 class ResponseSchema(Schema):

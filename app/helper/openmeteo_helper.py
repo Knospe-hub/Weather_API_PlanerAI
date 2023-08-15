@@ -98,7 +98,7 @@ class OpenMeteoWeather:
         :param latitude:
         :param longitude:
         :param hourly:
-        :return:
+        :return: response_json: json with weather data
 
         https://open-meteo.com/en/docs
         """
@@ -133,6 +133,7 @@ class OpenMeteoWeather:
         #result looks like this: {'latitude': 52.52, 'longitude': 13.419998, 'generationtime_ms': 0.8810758590698242, 'utc_offset_seconds': 7200, 'timezone': 'Europe/Berlin', 'timezone_abbreviation': 'CEST', 'elevation': 46.0, 'hourly_units': {'time': 'iso8601', 'temperature_2m': '°C'}, 'hourly': {'time': ['2023-08-15T00:00', '2023-08-15T01:00', '2023-08-15T02:00', '2023-08-15T03:00', '2023-08-15T04:00', '2023-08-15T05:00', '2023-08-15T06:00', '2023-08-15T07:00', '2023-08-15T08:00', '2023-08-15T09:00', '2023-08-15T10:00', '2023-08-15T11:00', '2023-08-15T12:00', '2023-08-15T13:00', '2023-08-15T14:00', '2023-08-15T15:00', '2023-08-15T16:00', '2023-08-15T17:00', '2023-08-15T18:00', '2023-08-15T19:00', '2023-08-15T20:00', '2023-08-15T21:00', '2023-08-15T22:00', '2023-08-15T23:00', '2023-08-16T00:00', '2023-08-16T01:00', '2023-08-16T02:00', '2023-08-16T03:00', '2023-08-16T04:00', '2023-08-16T05:00', '2023-08-16T06:00', '2023-08-16T07:00', '2023-08-16T08:00', '2023-08-16T09:00', '2023-08-16T10:00', '2023-08-16T11:00', '2023-08-16T12:00', '2023-08-16T13:00', '2023-08-16T14:00', '2023-08-16T15:00', '2023-08-16T16:00', '2023-08-16T17:00', '2023-08-16T18:00', '2023-08-16T19:00', '2023-08-16T20:00', '2023-08-16T21:00', '2023-08-16T22:00', '2023-08-16T23:00'], 'temperature_2m': [21.1, 20.8, 20.6, 20.0, 19.7, 19.3, 18.9, 19.3, 20.0, 21.7, 23.8, 26.0, 26.8, 27.8, 28.7, 29.8, 30.4, 30.3, 30.0, 28.7, 26.3, 24.1, 23.4, 22.9, 22.0, 21.4, 21.1, 20.8, 20.6, 20.3, 20.0, 20.0, 20.4, 21.3, 22.3, 22.8, 23.7, 25.4, 26.5, 27.0, 26.9, 27.2, 26.6, 26.0, 24.7, 23.1, 21.8, 20.9]}, 'daily_units': {'time': 'iso8601', 'temperature_2m_max': '°C', 'temperature_2m_min': '°C', 'precipitation_sum': 'mm', 'rain_sum': 'mm', 'windspeed_10m_max': 'km/h'}, 'daily': {'time': ['2023-08-15', '2023-08-16'], 'temperature_2m_max': [30.4, 27.2], 'temperature_2m_min': [18.9, 20.0], 'precipitation_sum': [5.7, 0.3], 'rain_sum': [4.9, 0.2], 'windspeed_10m_max': [12.5, 13.5]}}
 
         # get weather data and filter it
+        # the fields must be there because we checked the json against the schema. see "schemas/openmetei_schemas.py"
         api_response = weather_json
         daily_data = api_response['daily']
         rain_sum = daily_data['rain_sum']
@@ -157,14 +158,11 @@ class OpenMeteoWeather:
                 classification.append('sunny')
 
         # Printing the results
-        for i in range(len(rain_sum)):
-            print(f"Date: {daily_data['time'][i]}")
-            print(f"Min Temp: {min_temp[i]}°C, Max Temp: {max_temp[i]}°C")
-            print(f"Rain Sum: {rain_sum[i]} mm, Wind Speed: {wind_speed[i]} km/h")
-            print(f"Classification: {classification[i]}\n")
-
-
-
+        # for i in range(len(rain_sum)):
+        #     print(f"Date: {daily_data['time'][i]}")
+        #     print(f"Min Temp: {min_temp[i]}°C, Max Temp: {max_temp[i]}°C")
+        #     print(f"Rain Sum: {rain_sum[i]} mm, Wind Speed: {wind_speed[i]} km/h")
+        #     print(f"Classification: {classification[i]}\n")
 
         #return json with filtered data
         return {"min_temp": min_temp, "max_temp": max_temp, "rain_sum": rain_sum, "wind_speed": wind_speed, "classification": classification}
@@ -173,17 +171,17 @@ class OpenMeteoWeather:
 
 
 # test:
-city = "München"
-
-weather_client = OpenMeteoWeather()
-geocode = weather_client.get_geocode(city)
-print(f"geocode: {geocode}")
-
-latitude, longitude = weather_client.get_first_city_coords(geocode)
-print(f"latitude: {latitude}, longitude: {longitude}")
-
-weather = weather_client.get_weather(latitude, longitude)
-print(f"weather: {weather}")
-
-parsed_weather = weather_client.parse_weather_response(weather)
-print(f"parsed_weather: {parsed_weather}")
+# city = "München"
+#
+# weather_client = OpenMeteoWeather()
+# geocode = weather_client.get_geocode(city)
+# print(f"geocode: {geocode}")
+#
+# latitude, longitude = weather_client.get_first_city_coords(geocode)
+# print(f"latitude: {latitude}, longitude: {longitude}")
+#
+# weather = weather_client.get_weather(latitude, longitude)
+# print(f"weather: {weather}")
+#
+# parsed_weather = weather_client.parse_weather_response(weather)
+# print(f"parsed_weather: {parsed_weather}")

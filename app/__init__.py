@@ -20,7 +20,7 @@ def create_app(config_name):
 
     # model imports:
     # from .models.usr import User, Permission, Role
-    # from .models.target_settings_model import TargetSettings
+
 
 
 
@@ -31,7 +31,7 @@ def create_app(config_name):
     # endpoints imports:
 
     # TEST_ENDPOINTS_START
-    # from .deliver_api.test_endpoint import TestEndpoint
+    from .deliver_api.get_weather import GetWeather
 
 
 
@@ -40,20 +40,18 @@ def create_app(config_name):
 
     # enpoints resourcen registrieren:
 
-    # api.add_resource(TestEndpoint, "/api/test")
-
+    api.add_resource(GetWeather, '/get_weather/<string:city>')
 
 
     # blueprints registrieren
     # from app.admin_api import admin_api_bp as admin_api
-    # from app.deliver_api import delivery_api_bp as delivery_api
+    from app.deliver_api import delivery_api_bp as delivery_api
 
     # app.register_blueprint(admin_api)
-    # app.register_blueprint(delivery_api)
+    app.register_blueprint(delivery_api)
 
     with app.app_context():
         db.create_all()
-        # usr.Role.insert_roles()
         db.session.commit()
 
 
