@@ -66,7 +66,7 @@ class OpenMeteoWeather:
             response_json = response.json()
             return response_json
         else:
-            return {"error": response.status_code, "message": f"could not get geocode for city: {city}"}, 500
+            return {"error": response.status_code, "message": f"could not get geocode for city: {city}"}
 
     def get_first_city_coords(self, openmeteo_json):
         """
@@ -110,7 +110,7 @@ class OpenMeteoWeather:
             response_json = response.json()
             return response_json
         else:
-            return {"error": response.status_code, "message": f"could not get weather for lat: {latitude}, lon: {longitude}"}, 500
+            return {"error": response.status_code, "message": f"could not get weather for lat: {latitude}, lon: {longitude}"}
 
     def parse_weather_response(self, weather_json):
         """

@@ -39,7 +39,6 @@ class GetWeather(Resource):
         weather_api = omh.OpenMeteoWeather()
 
         # get geocode for city
-
         try:
             openmeteo_json = weather_api.get_geocode(city)
         except Exception as e:
