@@ -1,0 +1,56 @@
+openapi: 3.0.0
+info:
+  title: PlanerAI Weather-TEST API
+  description: >-
+    testing REST API
+  version: 0.0.0
+servers:
+  - url: http://127.0.0.1:5000/api/
+tags:
+  - name: weather
+
+paths:
+  /test:
+    get:
+      tags:
+        - test
+      summary: "Get Hello World"
+      responses:
+        "200":
+          description: "Successful response"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+  /testPOST:
+    post:
+      tags:
+        - test
+      summary: "Post Request Echo"
+      requestBody:
+        description: "Request Body"
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  description: "Eine Nachricht"
+                  example: "Hallo Welt"
+      responses:
+        "200":
+          description: "Successful response"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  request:
+                    type: object
+
