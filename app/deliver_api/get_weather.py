@@ -42,7 +42,7 @@ class GetWeather(Resource):
         try:
             openmeteo_json = weather_api.get_geocode(city)
         except Exception as e:
-            return {"message": f"could not get geocode for city: {city}"}, 500
+            return {"message": f"could not get geocode for city: {city}"}, 400
         # print(f"openmeteo_json: {openmeteo_json}")
 
 
@@ -50,14 +50,14 @@ class GetWeather(Resource):
         try:
             latitude, longitude = weather_api.get_first_city_coords(openmeteo_json)
         except Exception as e:
-            return {"message": f"could not get geocode for city: {city}"}, 500
+            return {"message": f"could not get geocode for city: {city}"}, 400
         # print(f"latitude: {latitude}, longitude: {longitude}")
 
         # get weather data for geocode
         try:
             weather_json = weather_api.get_weather(latitude, longitude)
         except Exception as e:
-            return {"message": f"could not get weather for lat: {latitude}, lon: {longitude}"}, 500
+            return {"message": f"could not get weather for lat: {latitude}, lon: {longitude}"}, 400
         # print(f"weather_json: {weather_json}")
 
         # parse weather data
