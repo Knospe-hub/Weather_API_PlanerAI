@@ -5,52 +5,58 @@ info:
     testing REST API
   version: 0.0.0
 servers:
-  - url: http://127.0.0.1:5000/api/
+  - url: http://127.0.0.1:5000/
 tags:
   - name: weather
 
 paths:
-  /test:
+  /get_weather/{city}:
     get:
-      tags:
-        - test
-      summary: "Get Hello World"
+      summary: Get weather forecast for a city for the next 5 days
+      parameters:
+        - name: city
+          in: path
+          description: Name of the city
+          required: true
+          type: string
       responses:
-        "200":
-          description: "Successful response"
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-
-  /testPOST:
-    post:
-      tags:
-        - test
-      summary: "Post Request Echo"
-      requestBody:
-        description: "Request Body"
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                message:
-                  type: string
-                  description: "Eine Nachricht"
-                  example: "Hallo Welt"
-      responses:
-        "200":
-          description: "Successful response"
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  request:
-                    type: object
-
+        200:
+          description: Successful response
+          schema:
+            type: object
+            properties:
+              min_temp:
+                type: number
+                format: float
+                example: 18.5
+              max_temp:
+                type: number
+                format: float
+                example: 26.8
+              rain_sum:
+                type: number
+                format: float
+                example: 5.7
+              wind_speed:
+                type: number
+                format: float
+                example: 12.5
+              classification:
+                type: string
+                example: "rainy"
+        400:
+          description: Bad request
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "no city parameter given"
+        500:
+          description: Internal server error
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "could not parse weather data"
